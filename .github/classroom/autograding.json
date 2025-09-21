@@ -1,0 +1,155 @@
+{
+  "tests": [
+    {
+      "name": "Build System Check",
+      "setup": "",
+      "run": "make clean && make all",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Task 1: Pointer Operations - Compilation",
+      "setup": "",
+      "run": "gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor -lm",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Task 1: Pointer Operations - Basic Functionality",
+      "setup": "mkdir -p bin",
+      "run": "./tests/test_pointers.sh",
+      "input": "",
+      "output": "POINTER_TESTS_PASSED",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Task 2: Structure Operations - Compilation",
+      "setup": "",
+      "run": "gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor_struct -lm",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Task 2: Structure Operations - Functionality",
+      "setup": "mkdir -p bin",
+      "run": "./tests/test_structures.sh",
+      "input": "",
+      "output": "STRUCTURE_TESTS_PASSED",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Task 3: Bit Operations - Compilation",
+      "setup": "",
+      "run": "gcc -Wall -Wextra -std=c11 -Iinclude src/bit_operations.c -o bin/bit_operations -lm",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Task 3: Bit Operations - Functionality",
+      "setup": "mkdir -p bin",
+      "run": "./tests/test_bit_operations.sh",
+      "input": "",
+      "output": "BIT_TESTS_PASSED",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Task 4: Multi-Chip Arrays - Compilation",
+      "setup": "",
+      "run": "gcc -Wall -Wextra -std=c11 -Iinclude src/multi_chip_test.c -o bin/multi_chip_test -lm",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Task 4: Multi-Chip Arrays - Functionality",
+      "setup": "mkdir -p bin",
+      "run": "./tests/test_multi_chip.sh",
+      "input": "",
+      "output": "MULTI_CHIP_TESTS_PASSED",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    },
+    {
+      "name": "Task 5: AI Integration - Compilation",
+      "setup": "",
+      "run": "gcc -Wall -Wextra -std=c11 -Iinclude src/ai_enhanced_validation.c -o bin/ai_validation -lm",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Task 5: AI Documentation Check",
+      "setup": "",
+      "run": "./tests/test_ai_documentation.sh",
+      "input": "",
+      "output": "AI_DOCS_FOUND",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "Memory Safety Check",
+      "setup": "make debug",
+      "run": "./tests/test_memory_safety.sh",
+      "input": "",
+      "output": "MEMORY_SAFE",
+      "comparison": "included",
+      "timeout": 15,
+      "points": 10
+    },
+    {
+      "name": "Code Quality - Header Guards",
+      "setup": "",
+      "run": "./tests/test_code_quality.sh",
+      "input": "",
+      "output": "QUALITY_CHECKS_PASSED",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "Integration Test - All Components",
+      "setup": "make all",
+      "run": "./tests/test_integration.sh",
+      "input": "",
+      "output": "INTEGRATION_PASSED",
+      "comparison": "included",
+      "timeout": 20,
+      "points": 15
+    },
+    {
+      "name": "Function Implementation Check",
+      "setup": "",
+      "run": "./tests/test_function_implementation.sh",
+      "input": "",
+      "output": "FUNCTIONS_IMPLEMENTED",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    }
+  ]
+}
+

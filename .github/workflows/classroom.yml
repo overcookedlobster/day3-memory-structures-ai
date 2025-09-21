@@ -1,0 +1,34 @@
+name: GitHub Classroom Workflow
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Build Environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make valgrind
+
+      - name: Create Build Directory
+        run: mkdir -p bin
+
+      - name: Make Test Scripts Executable
+        run: chmod +x tests/*.sh
+
+      - uses: education/autograding@v1
+
