@@ -112,6 +112,10 @@ int chip_system_update_all(ChipSystem *system) {
     float total_temperature = 0.0f;
     int healthy_chips = 0;
 
+    // Suppress unused variable warnings
+    (void)total_temperature;
+    (void)healthy_chips;
+
     // Example framework (uncomment and complete):
     // for (int i = 0; i < system->total_count; i++) {
     //     if (chip_update_state(&system->chips[i])) {
@@ -216,6 +220,11 @@ bool chip_system_health_check(ChipSystem *system) {
     int healthy_count = 0;
     int warning_count = 0;
     int critical_count = 0;
+
+    // Suppress unused variable warnings
+    (void)healthy_count;
+    (void)warning_count;
+    (void)critical_count;
 
     // Example framework (uncomment and complete):
     // printf("=== System Health Check ===\n");

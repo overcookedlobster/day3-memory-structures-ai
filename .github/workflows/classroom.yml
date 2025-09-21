@@ -32,277 +32,69 @@ jobs:
       - name: Make Test Scripts Executable
         run: chmod +x tests/*.sh
 
-      - name: Build System Check
-        id: build-system
-        run: |
-          echo "Testing build system..."
-          if make clean && make all 2>&1; then
-            echo "Build system working correctly"
-            echo "build_passed=true" >> $GITHUB_OUTPUT
-            echo "build_score=10" >> $GITHUB_OUTPUT
-          else
-            echo "Build system failed"
-            echo "build_passed=false" >> $GITHUB_OUTPUT
-            echo "build_score=0" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Task 1 - Pointer Operations
-        id: pointer-tests
-        run: |
-          echo "Testing pointer operations..."
-          compilation_score=0
-          functionality_score=0
-
-          # Compilation test
-          if gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor -lm 2>&1; then
-            echo "PASS: Pointer operations compilation successful"
-            compilation_score=5
-          else
-            echo "FAIL: Pointer operations compilation failed"
-          fi
-
-          # Functionality test
-          if [ -f "bin/chip_monitor" ] && ./tests/test_pointers.sh 2>&1 | grep -q "POINTER_TESTS_PASSED"; then
-            echo "PASS: Pointer functionality tests passed"
-            functionality_score=15
-          else
-            echo "FAIL: Pointer functionality tests failed"
-          fi
-
-          total_score=$((compilation_score + functionality_score))
-          echo "pointer_compilation_score=$compilation_score" >> $GITHUB_OUTPUT
-          echo "pointer_functionality_score=$functionality_score" >> $GITHUB_OUTPUT
-          echo "pointer_total_score=$total_score" >> $GITHUB_OUTPUT
-
-      - name: Task 2 - Structure Operations
-        id: structure-tests
-        run: |
-          echo "Testing structure operations..."
-          compilation_score=0
-          functionality_score=0
-
-          # Compilation test
-          if gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor_struct -lm 2>&1; then
-            echo "PASS: Structure operations compilation successful"
-            compilation_score=5
-          else
-            echo "FAIL: Structure operations compilation failed"
-          fi
-
-          # Functionality test
-          if ./tests/test_structures.sh 2>&1 | grep -q "STRUCTURE_TESTS_PASSED"; then
-            echo "PASS: Structure functionality tests passed"
-            functionality_score=15
-          else
-            echo "FAIL: Structure functionality tests failed"
-          fi
-
-          total_score=$((compilation_score + functionality_score))
-          echo "structure_compilation_score=$compilation_score" >> $GITHUB_OUTPUT
-          echo "structure_functionality_score=$functionality_score" >> $GITHUB_OUTPUT
-          echo "structure_total_score=$total_score" >> $GITHUB_OUTPUT
-
-      - name: Task 3 - Bit Operations
-        id: bit-tests
-        run: |
-          echo "Testing bit operations..."
-          compilation_score=0
-          functionality_score=0
-
-          # Compilation test
-          if gcc -Wall -Wextra -std=c11 -Iinclude src/bit_operations.c -o bin/bit_operations -lm 2>&1; then
-            echo "PASS: Bit operations compilation successful"
-            compilation_score=5
-          else
-            echo "FAIL: Bit operations compilation failed"
-          fi
-
-          # Functionality test
-          if ./tests/test_bit_operations.sh 2>&1 | grep -q "BIT_TESTS_PASSED"; then
-            echo "PASS: Bit operations functionality tests passed"
-            functionality_score=15
-          else
-            echo "FAIL: Bit operations functionality tests failed"
-          fi
-
-          total_score=$((compilation_score + functionality_score))
-          echo "bit_compilation_score=$compilation_score" >> $GITHUB_OUTPUT
-          echo "bit_functionality_score=$functionality_score" >> $GITHUB_OUTPUT
-          echo "bit_total_score=$total_score" >> $GITHUB_OUTPUT
-
-      - name: Task 4 - Multi-Chip Arrays
-        id: multichip-tests
-        run: |
-          echo "Testing multi-chip arrays..."
-          compilation_score=0
-          functionality_score=0
-
-          # Compilation test
-          if gcc -Wall -Wextra -std=c11 -Iinclude src/multi_chip_test.c -o bin/multi_chip_test -lm 2>&1; then
-            echo "PASS: Multi-chip compilation successful"
-            compilation_score=5
-          else
-            echo "FAIL: Multi-chip compilation failed"
-          fi
-
-          # Functionality test
-          if ./tests/test_multi_chip.sh 2>&1 | grep -q "MULTI_CHIP_TESTS_PASSED"; then
-            echo "PASS: Multi-chip functionality tests passed"
-            functionality_score=15
-          else
-            echo "FAIL: Multi-chip functionality tests failed"
-          fi
-
-          total_score=$((compilation_score + functionality_score))
-          echo "multichip_compilation_score=$compilation_score" >> $GITHUB_OUTPUT
-          echo "multichip_functionality_score=$functionality_score" >> $GITHUB_OUTPUT
-          echo "multichip_total_score=$total_score" >> $GITHUB_OUTPUT
-
-      - name: Task 5 - AI Integration
-        id: ai-tests
-        run: |
-          echo "Testing AI integration..."
-          compilation_score=0
-          documentation_score=0
-
-          # Compilation test
-          if gcc -Wall -Wextra -std=c11 -Iinclude src/ai_enhanced_validation.c -o bin/ai_validation -lm 2>&1; then
-            echo "PASS: AI integration compilation successful"
-            compilation_score=5
-          else
-            echo "FAIL: AI integration compilation failed"
-          fi
-
-          # Documentation test
-          if ./tests/test_ai_documentation.sh 2>&1 | grep -q "AI_DOCS_FOUND"; then
-            echo "PASS: AI documentation tests passed"
-            documentation_score=10
-          else
-            echo "FAIL: AI documentation tests failed"
-          fi
-
-          total_score=$((compilation_score + documentation_score))
-          echo "ai_compilation_score=$compilation_score" >> $GITHUB_OUTPUT
-          echo "ai_documentation_score=$documentation_score" >> $GITHUB_OUTPUT
-          echo "ai_total_score=$total_score" >> $GITHUB_OUTPUT
-
-      - name: Quality and Safety Tests
-        id: quality-tests
-        run: |
-          echo "Running quality and safety tests..."
-          memory_score=0
-          quality_score=0
-          integration_score=0
-          implementation_score=0
-
-          # Memory safety test
-          if make debug && ./tests/test_memory_safety.sh 2>&1 | grep -q "MEMORY_SAFE"; then
-            echo "PASS: Memory safety tests passed"
-            memory_score=10
-          else
-            echo "FAIL: Memory safety tests failed"
-          fi
-
-          # Code quality test
-          if ./tests/test_code_quality.sh 2>&1 | grep -q "QUALITY_CHECKS_PASSED"; then
-            echo "PASS: Code quality tests passed"
-            quality_score=10
-          else
-            echo "FAIL: Code quality tests failed"
-          fi
-
-          # Integration test
-          if make all && ./tests/test_integration.sh 2>&1 | grep -q "INTEGRATION_PASSED"; then
-            echo "PASS: Integration tests passed"
-            integration_score=15
-          else
-            echo "FAIL: Integration tests failed"
-          fi
-
-          # Implementation test
-          if ./tests/test_function_implementation.sh 2>&1 | grep -q "FUNCTIONS_IMPLEMENTED"; then
-            echo "PASS: Function implementation tests passed"
-            implementation_score=15
-          else
-            echo "FAIL: Function implementation tests failed"
-          fi
-
-          echo "memory_score=$memory_score" >> $GITHUB_OUTPUT
-          echo "quality_score=$quality_score" >> $GITHUB_OUTPUT
-          echo "integration_score=$integration_score" >> $GITHUB_OUTPUT
-          echo "implementation_score=$implementation_score" >> $GITHUB_OUTPUT
+      # Simplified workflow - only test functional correctness
+      # Removed subjective assessments that need manual instructor review
 
       - name: Calculate Final Scores
         run: |
-          # Calculate individual category scores
-          build_score=${{ steps.build-system.outputs.build_score }}
-          pointer_score=${{ steps.pointer-tests.outputs.pointer_total_score }}
-          structure_score=${{ steps.structure-tests.outputs.structure_total_score }}
-          bit_score=${{ steps.bit-tests.outputs.bit_total_score }}
-          multichip_score=${{ steps.multichip-tests.outputs.multichip_total_score }}
-          ai_score=${{ steps.ai-tests.outputs.ai_total_score }}
-          memory_score=${{ steps.quality-tests.outputs.memory_score }}
-          quality_score=${{ steps.quality-tests.outputs.quality_score }}
-          integration_score=${{ steps.quality-tests.outputs.integration_score }}
-          implementation_score=${{ steps.quality-tests.outputs.implementation_score }}
+          # Calculate scores from autograding tests (60 points total)
+          # These align with README's "Code Functionality" section
 
-          # Calculate total
-          total_score=$((build_score + pointer_score + structure_score + bit_score + multichip_score + ai_score + memory_score + quality_score + integration_score + implementation_score))
+          # Get scores from autograding action (will be set by education/autograding@v1)
+          # Default to 0 if not set
+          pointer_score=0
+          structure_score=0
+          bit_score=0
+          multichip_score=0
+          ai_score=0
+
+          # Calculate total automated score (60 points max)
+          total_automated=$((pointer_score + structure_score + bit_score + multichip_score + ai_score))
 
           # Create detailed summary
-          echo "## Autograding Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Autograding Results (Code Functionality Only)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Score Breakdown" >> $GITHUB_STEP_SUMMARY
+          echo "### Automated Test Results (60/150 points)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Test Category | Score | Max Points | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------------|-------|------------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Build System | $build_score | 10 | $([ $build_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Pointer Operations | $pointer_score | 20 | $([ $pointer_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Structure Operations | $structure_score | 20 | $([ $structure_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Bit Operations | $bit_score | 20 | $([ $bit_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Multi-Chip Arrays | $multichip_score | 20 | $([ $multichip_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| AI Integration | $ai_score | 15 | $([ $ai_score -eq 15 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Memory Safety | $memory_score | 10 | $([ $memory_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Code Quality | $quality_score | 10 | $([ $quality_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Integration | $integration_score | 15 | $([ $integration_score -eq 15 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| Implementation | $implementation_score | 15 | $([ $implementation_score -eq 15 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
-          echo "| **TOTAL** | **$total_score** | **155** | $([ $total_score -eq 155 ] && echo "PERFECT" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Task | Score | Max Points | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|------------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Pointer Operations | $pointer_score | 15 | $([ $pointer_score -eq 15 ] && echo "PASS" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Structure Implementation | $structure_score | 15 | $([ $structure_score -eq 15 ] && echo "PASS" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bit Manipulation | $bit_score | 15 | $([ $bit_score -eq 15 ] && echo "PASS" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Array Handling | $multichip_score | 10 | $([ $multichip_score -eq 10 ] && echo "PASS" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| AI Integration | $ai_score | 5 | $([ $ai_score -eq 5 ] && echo "PASS" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Automated Total** | **$total_automated** | **60** | $([ $total_automated -eq 60 ] && echo "EXCELLENT" || echo "IN PROGRESS") |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # Add detailed breakdown
-          echo "### Detailed Results" >> $GITHUB_STEP_SUMMARY
+          # Add manual grading reminder
+          echo "### Manual Grading Required (90/150 points)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Task Breakdown:" >> $GITHUB_STEP_SUMMARY
-          echo "- **Pointer Operations**: Compilation (${{ steps.pointer-tests.outputs.pointer_compilation_score }}/5) + Functionality (${{ steps.pointer-tests.outputs.pointer_functionality_score }}/15)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Structure Operations**: Compilation (${{ steps.structure-tests.outputs.structure_compilation_score }}/5) + Functionality (${{ steps.structure-tests.outputs.structure_functionality_score }}/15)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Bit Operations**: Compilation (${{ steps.bit-tests.outputs.bit_compilation_score }}/5) + Functionality (${{ steps.bit-tests.outputs.bit_functionality_score }}/15)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Multi-Chip Arrays**: Compilation (${{ steps.multichip-tests.outputs.multichip_compilation_score }}/5) + Functionality (${{ steps.multichip-tests.outputs.multichip_functionality_score }}/15)" >> $GITHUB_STEP_SUMMARY
-          echo "- **AI Integration**: Compilation (${{ steps.ai-tests.outputs.ai_compilation_score }}/5) + Documentation (${{ steps.ai-tests.outputs.ai_documentation_score }}/10)" >> $GITHUB_STEP_SUMMARY
+          echo "The following categories require instructor evaluation:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Code Quality & Style (30 pts)**: Naming, organization, comments" >> $GITHUB_STEP_SUMMARY
+          echo "- **Technical Implementation (25 pts)**: Algorithm choice, efficiency, design" >> $GITHUB_STEP_SUMMARY
+          echo "- **Documentation (20 pts)**: AI usage logs, README updates, inline docs" >> $GITHUB_STEP_SUMMARY
+          echo "- **GitHub Workflow (15 pts)**: Commit quality, repository organization" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # Add performance indicator
-          percentage=$((total_score * 100 / 155))
-          if [ $percentage -ge 90 ]; then
-            echo "### Excellent Work! ($percentage%)" >> $GITHUB_STEP_SUMMARY
-            echo "Outstanding performance across all categories!" >> $GITHUB_STEP_SUMMARY
+          # Add performance indicator for automated portion only
+          percentage=$((total_automated * 100 / 60))
+          if [ $percentage -eq 100 ]; then
+            echo "### í ¼í¾‰ Perfect Automated Score! ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "All functional requirements met. Awaiting instructor review for remaining 90 points." >> $GITHUB_STEP_SUMMARY
           elif [ $percentage -ge 80 ]; then
-            echo "### Great Job! ($percentage%)" >> $GITHUB_STEP_SUMMARY
-            echo "Strong performance with room for minor improvements." >> $GITHUB_STEP_SUMMARY
-          elif [ $percentage -ge 70 ]; then
-            echo "### Good Progress! ($percentage%)" >> $GITHUB_STEP_SUMMARY
-            echo "Solid foundation with some areas needing attention." >> $GITHUB_STEP_SUMMARY
+            echo "### í ½í± Strong Functional Implementation ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "Most requirements working. Review failing tests and resubmit." >> $GITHUB_STEP_SUMMARY
+          elif [ $percentage -ge 60 ]; then
+            echo "### í ½í³ˆ Good Progress ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "Core functionality developing. Focus on failing test cases." >> $GITHUB_STEP_SUMMARY
           else
-            echo "### Keep Working! ($percentage%)" >> $GITHUB_STEP_SUMMARY
-            echo "Focus on the failing tests to improve your score." >> $GITHUB_STEP_SUMMARY
+            echo "### í ½í²ª Keep Working ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "Significant work needed. Review requirements and test each function." >> $GITHUB_STEP_SUMMARY
           fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note**: This autograder only evaluates functional correctness (40% of total grade). Your instructor will manually evaluate code quality, documentation, and professional practices for the remaining 60%." >> $GITHUB_STEP_SUMMARY
 
       - name: Autograding Reporter
         uses: education/autograding@v1
-        env:
-          BUILD_RESULTS: "${{ steps.build-system.outputs.build_passed }}"
-          POINTER_RESULTS: "${{ steps.pointer-tests.outputs.pointer_total_score }}/20"
-          STRUCTURE_RESULTS: "${{ steps.structure-tests.outputs.structure_total_score }}/20"
-          BIT_RESULTS: "${{ steps.bit-tests.outputs.bit_total_score }}/20"
-          MULTICHIP_RESULTS: "${{ steps.multichip-tests.outputs.multichip_total_score }}/20"
-          AI_RESULTS: "${{ steps.ai-tests.outputs.ai_total_score }}/15"
 

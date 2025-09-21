@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include "bit_macros.h"
 #include "chip_state.h"
 
@@ -52,6 +53,7 @@ void demonstrate_basic_bit_ops(uint32_t initial_value) {
     printf("  - Show register value after each operation\n");
 
     uint32_t reg = initial_value;
+    (void)reg; // Suppress unused variable warning
 
     // Example framework (uncomment and complete):
     // printf("Initial register: 0x%08X\n", reg);
@@ -265,6 +267,7 @@ void demonstrate_advanced_bit_ops(void) {
     printf("  - Show bit counting and finding\n");
 
     uint32_t test_reg = 0x12345678;
+    (void)test_reg; // Suppress unused variable warning
 
     // Example framework (uncomment and complete):
     // printf("Advanced Bit Operations Demo:\n");
