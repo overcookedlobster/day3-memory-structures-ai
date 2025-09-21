@@ -55,18 +55,18 @@ jobs:
 
           # Compilation test
           if gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor -lm 2>&1; then
-            echo "âœ“ Pointer operations compilation successful"
+            echo "PASS: Pointer operations compilation successful"
             compilation_score=5
           else
-            echo "âœ— Pointer operations compilation failed"
+            echo "FAIL: Pointer operations compilation failed"
           fi
 
           # Functionality test
           if [ -f "bin/chip_monitor" ] && ./tests/test_pointers.sh 2>&1 | grep -q "POINTER_TESTS_PASSED"; then
-            echo "âœ“ Pointer functionality tests passed"
+            echo "PASS: Pointer functionality tests passed"
             functionality_score=15
           else
-            echo "âœ— Pointer functionality tests failed"
+            echo "FAIL: Pointer functionality tests failed"
           fi
 
           total_score=$((compilation_score + functionality_score))
@@ -83,18 +83,18 @@ jobs:
 
           # Compilation test
           if gcc -Wall -Wextra -std=c11 -Iinclude src/chip_monitor.c -o bin/chip_monitor_struct -lm 2>&1; then
-            echo "âœ“ Structure operations compilation successful"
+            echo "PASS: Structure operations compilation successful"
             compilation_score=5
           else
-            echo "âœ— Structure operations compilation failed"
+            echo "FAIL: Structure operations compilation failed"
           fi
 
           # Functionality test
           if ./tests/test_structures.sh 2>&1 | grep -q "STRUCTURE_TESTS_PASSED"; then
-            echo "âœ“ Structure functionality tests passed"
+            echo "PASS: Structure functionality tests passed"
             functionality_score=15
           else
-            echo "âœ— Structure functionality tests failed"
+            echo "FAIL: Structure functionality tests failed"
           fi
 
           total_score=$((compilation_score + functionality_score))
@@ -111,18 +111,18 @@ jobs:
 
           # Compilation test
           if gcc -Wall -Wextra -std=c11 -Iinclude src/bit_operations.c -o bin/bit_operations -lm 2>&1; then
-            echo "âœ“ Bit operations compilation successful"
+            echo "PASS: Bit operations compilation successful"
             compilation_score=5
           else
-            echo "âœ— Bit operations compilation failed"
+            echo "FAIL: Bit operations compilation failed"
           fi
 
           # Functionality test
           if ./tests/test_bit_operations.sh 2>&1 | grep -q "BIT_TESTS_PASSED"; then
-            echo "âœ“ Bit operations functionality tests passed"
+            echo "PASS: Bit operations functionality tests passed"
             functionality_score=15
           else
-            echo "âœ— Bit operations functionality tests failed"
+            echo "FAIL: Bit operations functionality tests failed"
           fi
 
           total_score=$((compilation_score + functionality_score))
@@ -139,18 +139,18 @@ jobs:
 
           # Compilation test
           if gcc -Wall -Wextra -std=c11 -Iinclude src/multi_chip_test.c -o bin/multi_chip_test -lm 2>&1; then
-            echo "âœ“ Multi-chip compilation successful"
+            echo "PASS: Multi-chip compilation successful"
             compilation_score=5
           else
-            echo "âœ— Multi-chip compilation failed"
+            echo "FAIL: Multi-chip compilation failed"
           fi
 
           # Functionality test
           if ./tests/test_multi_chip.sh 2>&1 | grep -q "MULTI_CHIP_TESTS_PASSED"; then
-            echo "âœ“ Multi-chip functionality tests passed"
+            echo "PASS: Multi-chip functionality tests passed"
             functionality_score=15
           else
-            echo "âœ— Multi-chip functionality tests failed"
+            echo "FAIL: Multi-chip functionality tests failed"
           fi
 
           total_score=$((compilation_score + functionality_score))
@@ -167,18 +167,18 @@ jobs:
 
           # Compilation test
           if gcc -Wall -Wextra -std=c11 -Iinclude src/ai_enhanced_validation.c -o bin/ai_validation -lm 2>&1; then
-            echo "âœ“ AI integration compilation successful"
+            echo "PASS: AI integration compilation successful"
             compilation_score=5
           else
-            echo "âœ— AI integration compilation failed"
+            echo "FAIL: AI integration compilation failed"
           fi
 
           # Documentation test
           if ./tests/test_ai_documentation.sh 2>&1 | grep -q "AI_DOCS_FOUND"; then
-            echo "âœ“ AI documentation tests passed"
+            echo "PASS: AI documentation tests passed"
             documentation_score=10
           else
-            echo "âœ— AI documentation tests failed"
+            echo "FAIL: AI documentation tests failed"
           fi
 
           total_score=$((compilation_score + documentation_score))
@@ -197,34 +197,34 @@ jobs:
 
           # Memory safety test
           if make debug && ./tests/test_memory_safety.sh 2>&1 | grep -q "MEMORY_SAFE"; then
-            echo "âœ“ Memory safety tests passed"
+            echo "PASS: Memory safety tests passed"
             memory_score=10
           else
-            echo "âœ— Memory safety tests failed"
+            echo "FAIL: Memory safety tests failed"
           fi
 
           # Code quality test
           if ./tests/test_code_quality.sh 2>&1 | grep -q "QUALITY_CHECKS_PASSED"; then
-            echo "âœ“ Code quality tests passed"
+            echo "PASS: Code quality tests passed"
             quality_score=10
           else
-            echo "âœ— Code quality tests failed"
+            echo "FAIL: Code quality tests failed"
           fi
 
           # Integration test
           if make all && ./tests/test_integration.sh 2>&1 | grep -q "INTEGRATION_PASSED"; then
-            echo "âœ“ Integration tests passed"
+            echo "PASS: Integration tests passed"
             integration_score=15
           else
-            echo "âœ— Integration tests failed"
+            echo "FAIL: Integration tests failed"
           fi
 
           # Implementation test
           if ./tests/test_function_implementation.sh 2>&1 | grep -q "FUNCTIONS_IMPLEMENTED"; then
-            echo "âœ“ Function implementation tests passed"
+            echo "PASS: Function implementation tests passed"
             implementation_score=15
           else
-            echo "âœ— Function implementation tests failed"
+            echo "FAIL: Function implementation tests failed"
           fi
 
           echo "memory_score=$memory_score" >> $GITHUB_OUTPUT
@@ -250,27 +250,27 @@ jobs:
           total_score=$((build_score + pointer_score + structure_score + bit_score + multichip_score + ai_score + memory_score + quality_score + integration_score + implementation_score))
 
           # Create detailed summary
-          echo "## í ¼í¾¯ Autograding Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Autograding Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### í ½í³Š Score Breakdown" >> $GITHUB_STEP_SUMMARY
+          echo "### Score Breakdown" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Test Category | Score | Max Points | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---------------|-------|------------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í´§ Build System | $build_score | 10 | $([ $build_score -eq 10 ] && echo "âœ…" || echo "âŒ") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í±‰ Pointer Operations | $pointer_score | 20 | $([ $pointer_score -eq 20 ] && echo "âœ…" || echo "âš ï¸") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ¼í¿—ï¸ Structure Operations | $structure_score | 20 | $([ $structure_score -eq 20 ] && echo "âœ…" || echo "âš ï¸") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í´¢ Bit Operations | $bit_score | 20 | $([ $bit_score -eq 20 ] && echo "âœ…" || echo "âš ï¸") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í¶¥ï¸ Multi-Chip Arrays | $multichip_score | 20 | $([ $multichip_score -eq 20 ] && echo "âœ…" || echo "âš ï¸") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ¾í´– AI Integration | $ai_score | 15 | $([ $ai_score -eq 15 ] && echo "âœ…" || echo "âš ï¸") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í»¡ï¸ Memory Safety | $memory_score | 10 | $([ $memory_score -eq 10 ] && echo "âœ…" || echo "âŒ") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í³‹ Code Quality | $quality_score | 10 | $([ $quality_score -eq 10 ] && echo "âœ…" || echo "âŒ") |" >> $GITHUB_STEP_SUMMARY
-          echo "| í ½í´— Integration | $integration_score | 15 | $([ $integration_score -eq 15 ] && echo "âœ…" || echo "âŒ") |" >> $GITHUB_STEP_SUMMARY
-          echo "| âš™ï¸ Implementation | $implementation_score | 15 | $([ $implementation_score -eq 15 ] && echo "âœ…" || echo "âŒ") |" >> $GITHUB_STEP_SUMMARY
-          echo "| **í ¼í¿† TOTAL** | **$total_score** | **155** | $([ $total_score -eq 155 ] && echo "í ¼í¾‰" || echo "í ½í³ˆ") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build System | $build_score | 10 | $([ $build_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pointer Operations | $pointer_score | 20 | $([ $pointer_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Structure Operations | $structure_score | 20 | $([ $structure_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bit Operations | $bit_score | 20 | $([ $bit_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Multi-Chip Arrays | $multichip_score | 20 | $([ $multichip_score -eq 20 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| AI Integration | $ai_score | 15 | $([ $ai_score -eq 15 ] && echo "PASS" || echo "PARTIAL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Memory Safety | $memory_score | 10 | $([ $memory_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Quality | $quality_score | 10 | $([ $quality_score -eq 10 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Integration | $integration_score | 15 | $([ $integration_score -eq 15 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| Implementation | $implementation_score | 15 | $([ $implementation_score -eq 15 ] && echo "PASS" || echo "FAIL") |" >> $GITHUB_STEP_SUMMARY
+          echo "| **TOTAL** | **$total_score** | **155** | $([ $total_score -eq 155 ] && echo "PERFECT" || echo "NEEDS WORK") |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # Add detailed breakdown
-          echo "### í ½í³ Detailed Results" >> $GITHUB_STEP_SUMMARY
+          echo "### Detailed Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "#### Task Breakdown:" >> $GITHUB_STEP_SUMMARY
           echo "- **Pointer Operations**: Compilation (${{ steps.pointer-tests.outputs.pointer_compilation_score }}/5) + Functionality (${{ steps.pointer-tests.outputs.pointer_functionality_score }}/15)" >> $GITHUB_STEP_SUMMARY
@@ -283,16 +283,16 @@ jobs:
           # Add performance indicator
           percentage=$((total_score * 100 / 155))
           if [ $percentage -ge 90 ]; then
-            echo "### í ¼í¼Ÿ Excellent Work! ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "### Excellent Work! ($percentage%)" >> $GITHUB_STEP_SUMMARY
             echo "Outstanding performance across all categories!" >> $GITHUB_STEP_SUMMARY
           elif [ $percentage -ge 80 ]; then
-            echo "### í ½í± Great Job! ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "### Great Job! ($percentage%)" >> $GITHUB_STEP_SUMMARY
             echo "Strong performance with room for minor improvements." >> $GITHUB_STEP_SUMMARY
           elif [ $percentage -ge 70 ]; then
-            echo "### í ½í³š Good Progress! ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "### Good Progress! ($percentage%)" >> $GITHUB_STEP_SUMMARY
             echo "Solid foundation with some areas needing attention." >> $GITHUB_STEP_SUMMARY
           else
-            echo "### í ½í²ª Keep Working! ($percentage%)" >> $GITHUB_STEP_SUMMARY
+            echo "### Keep Working! ($percentage%)" >> $GITHUB_STEP_SUMMARY
             echo "Focus on the failing tests to improve your score." >> $GITHUB_STEP_SUMMARY
           fi
 
