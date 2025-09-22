@@ -1,10 +1,16 @@
 /**
- * @file multi_chip_test.c
- * @brief Day 3 Task 4: Array of Chips for Multi-Device Testing (45 minutes)
+ * Day 3: Memory Management and Data Structures - Multi-Chip Array Operations
  *
- * This file implements array manipulation and string handling for managing
- * multiple chip instances. Students will learn array operations, string
- * manipulation, and batch processing in hardware validation contexts.
+ * Student Name: ___________________
+ * Date: ___________________
+ *
+ * INSTRUCTIONS:
+ * This file contains skeleton implementations for Task 4: Array Handling.
+ * Complete each TODO section to implement the required functionality.
+ *
+ * Task 4: Array Handling (10 points)
+ *
+ * Read the comments carefully and implement each function step by step.
  */
 
 #include <stdio.h>
@@ -16,8 +22,6 @@
 
 /**
  * Task 4: Array of Chips for Multi-Device Testing (45 minutes)
- *
- * TODO: Implement multi-chip array management and string handling
  *
  * Learning objectives:
  * - Master array manipulation for multiple chip instances
@@ -36,14 +40,17 @@ bool chip_system_init(ChipSystem *system, int num_chips) {
     // TODO: Implement chip system initialization
     //
     // Steps to complete:
-    // 1. Validate input parameters
+    // 1. Validate input parameters (check for NULL pointer)
     // 2. Check if num_chips is within MAX_CHIPS limit
-    // 3. Initialize each chip in the array
-    // 4. Set system-level parameters
-    // 5. Generate unique chip IDs for each chip
+    // 3. Initialize each chip in the array using a loop
+    // 4. Generate unique chip IDs for each chip
+    // 5. Set system-level parameters (chip_count, system_status)
     //
     // Chip ID format: "CHIP_XX" where XX is zero-padded number
     // Example: CHIP_00, CHIP_01, CHIP_02, etc.
+    //
+    // HINT: Use snprintf() to format chip IDs safely
+    // HINT: Call chip_init() for each chip in the array
 
     if (system == NULL) {
         printf("ERROR: System pointer is NULL\n");
@@ -56,30 +63,9 @@ bool chip_system_init(ChipSystem *system, int num_chips) {
     }
 
     printf("TODO: Implement chip_system_init function\n");
-    printf("  - Initializing %d chips\n", num_chips);
-    printf("  - Maximum chips supported: %d\n", MAX_CHIPS);
-
-    // Example framework (uncomment and complete):
-    // system->total_count = num_chips;
-    // system->active_count = 0;
-    // system->system_healthy = true;
-    // system->system_temperature = 0.0f;
-    //
-    // for (int i = 0; i < num_chips; i++) {
-    //     char chip_id[CHIP_ID_LENGTH];
-    //     snprintf(chip_id, sizeof(chip_id), "CHIP_%02d", i);
-    //
-    //     if (chip_init(&system->chips[i], chip_id)) {
-    //         system->active_count++;
-    //         printf("Initialized chip %d: %s\n", i, chip_id);
-    //     } else {
-    //         printf("Failed to initialize chip %d\n", i);
-    //         return false;
-    //     }
-    // }
-    //
-    // printf("Chip system initialized: %d/%d chips active\n",
-    //        system->active_count, system->total_count);
+    printf("  - Initialize %d chips\n", num_chips);
+    printf("  - Generate unique chip IDs\n");
+    printf("  - Set system parameters\n");
 
     return false; // Replace with actual implementation
 }
@@ -90,23 +76,23 @@ bool chip_system_init(ChipSystem *system, int num_chips) {
  * @return Number of chips successfully updated
  */
 int chip_system_update_all(ChipSystem *system) {
-    // TODO: Implement batch chip update operation
+    // TODO: Implement batch chip update
     //
     // Steps to complete:
     // 1. Validate input parameter
     // 2. Loop through all chips in the system
-    // 3. Update each chip's state
+    // 3. Update each active chip's state
     // 4. Count successful updates
-    // 5. Update system-level statistics (average temperature, etc.)
-    // 6. Check overall system health
+    // 5. Update system statistics (optional)
+    // 6. Return the number of successful updates
+    //
+    // HINT: Only update chips that are marked as active
+    // HINT: Use chip_update_state() function for each chip
 
     if (system == NULL) {
         printf("ERROR: System pointer is NULL\n");
         return 0;
     }
-
-    printf("TODO: Implement chip_system_update_all function\n");
-    printf("  - Updating %d chips\n", system->total_count);
 
     int updated_count = 0;
     float total_temperature = 0.0f;
@@ -116,47 +102,18 @@ int chip_system_update_all(ChipSystem *system) {
     (void)total_temperature;
     (void)healthy_chips;
 
-    // Example framework (uncomment and complete):
-    // for (int i = 0; i < system->total_count; i++) {
-    //     if (chip_update_state(&system->chips[i])) {
-    //         updated_count++;
-    //
-    //         // Accumulate temperature for average calculation
-    //         total_temperature += system->chips[i].temperature;
-    //
-    //         // Count healthy chips
-    //         if (chip_health_check(&system->chips[i])) {
-    //             healthy_chips++;
-    //         }
-    //
-    //         printf("Updated chip %s: %.1f°C\n",
-    //                system->chips[i].chip_id,
-    //                system->chips[i].temperature);
-    //     } else {
-    //         printf("Failed to update chip %s\n", system->chips[i].chip_id);
-    //     }
-    // }
-    //
-    // // Update system statistics
-    // if (updated_count > 0) {
-    //     system->system_temperature = total_temperature / updated_count;
-    //     system->system_healthy = (healthy_chips == system->total_count);
-    //     system->active_count = updated_count;
-    // }
-    //
-    // printf("System update complete: %d/%d chips updated\n",
-    //        updated_count, system->total_count);
-    // printf("Average temperature: %.1f°C\n", system->system_temperature);
-    // printf("System health: %s\n", system->system_healthy ? "HEALTHY" : "ISSUES DETECTED");
+    printf("TODO: Implement chip_system_update_all function\n");
+    printf("  - Update all active chips in system\n");
+    printf("  - Count successful updates\n");
 
-    return updated_count;
+    return updated_count; // Replace with actual implementation
 }
 
 /**
- * @brief Find chip by ID in the system
+ * @brief Find a chip by its ID string
  * @param system Pointer to ChipSystem structure
- * @param chip_id String identifier to search for
- * @return Pointer to ChipState if found, NULL otherwise
+ * @param chip_id String ID to search for
+ * @return Pointer to found chip, or NULL if not found
  */
 ChipState* chip_system_find_by_id(ChipSystem *system, const char *chip_id) {
     // TODO: Implement chip search by ID
@@ -164,12 +121,12 @@ ChipState* chip_system_find_by_id(ChipSystem *system, const char *chip_id) {
     // Steps to complete:
     // 1. Validate input parameters
     // 2. Loop through all chips in the system
-    // 3. Use string comparison to find matching chip ID
-    // 4. Return pointer to found chip or NULL if not found
-    // 5. Handle case-insensitive search (bonus)
+    // 3. Compare each chip's ID with the target ID
+    // 4. Return pointer to matching chip
+    // 5. Return NULL if no match found
     //
-    // Use strcmp() or strncmp() for string comparison
-    // Consider using strcasecmp() for case-insensitive comparison
+    // HINT: Use strcmp() to compare strings
+    // HINT: Return the address of the chip (&system->chips[i])
 
     if (system == NULL || chip_id == NULL) {
         printf("ERROR: Invalid parameters for chip search\n");
@@ -177,45 +134,69 @@ ChipState* chip_system_find_by_id(ChipSystem *system, const char *chip_id) {
     }
 
     printf("TODO: Implement chip_system_find_by_id function\n");
-    printf("  - Searching for chip ID: %s\n", chip_id);
-    printf("  - Total chips to search: %d\n", system->total_count);
-
-    // Example framework (uncomment and complete):
-    // for (int i = 0; i < system->total_count; i++) {
-    //     if (strcmp(system->chips[i].chip_id, chip_id) == 0) {
-    //         printf("Found chip: %s at index %d\n", chip_id, i);
-    //         return &system->chips[i];
-    //     }
-    // }
-    //
-    // printf("Chip not found: %s\n", chip_id);
+    printf("  - Search for chip ID: %s\n", chip_id);
 
     return NULL; // Replace with actual implementation
 }
 
 /**
- * @brief Get system health summary
+ * @brief Count chips that meet specific criteria
  * @param system Pointer to ChipSystem structure
- * @return true if all chips are healthy, false otherwise
+ * @param active_only If true, count only active chips
+ * @return Number of chips meeting criteria
  */
-bool chip_system_health_check(ChipSystem *system) {
-    // TODO: Implement comprehensive system health check
+int chip_system_count_chips(ChipSystem *system, bool active_only) {
+    // TODO: Implement chip counting with criteria
     //
     // Steps to complete:
     // 1. Validate input parameter
-    // 2. Check each chip's health status
-    // 3. Count healthy vs unhealthy chips
-    // 4. Check system-level parameters (average temperature, etc.)
-    // 5. Return overall system health status
-    // 6. Print detailed health report
+    // 2. Initialize counter to 0
+    // 3. Loop through all chips in the system
+    // 4. Check each chip against the criteria
+    // 5. Increment counter for matching chips
+    // 6. Return the final count
+    //
+    // HINT: If active_only is true, only count chips where is_active == true
+    // HINT: If active_only is false, count all initialized chips
+
+    if (system == NULL) {
+        printf("ERROR: System pointer is NULL\n");
+        return 0;
+    }
+
+    printf("TODO: Implement chip_system_count_chips function\n");
+    printf("  - Count chips (active only: %s)\n", active_only ? "true" : "false");
+
+    return 0; // Replace with actual implementation
+}
+
+/**
+ * @brief Perform health check on all chips in the system
+ * @param system Pointer to ChipSystem structure
+ * @return Overall system health status
+ */
+bool chip_system_health_check(ChipSystem *system) {
+    // TODO: Implement system-wide health check
+    //
+    // Steps to complete:
+    // 1. Validate input parameter
+    // 2. Initialize health counters
+    // 3. Loop through all active chips
+    // 4. Check each chip's health indicators
+    // 5. Categorize chips (healthy, warning, critical)
+    // 6. Determine overall system health
+    // 7. Print health summary
+    // 8. Return overall health status
+    //
+    // Health criteria examples:
+    // - Temperature within normal range (0-85°C)
+    // - No error flags set
+    // - Status register indicates normal operation
 
     if (system == NULL) {
         printf("ERROR: System pointer is NULL\n");
         return false;
     }
-
-    printf("TODO: Implement chip_system_health_check function\n");
-    printf("  - Checking health of %d chips\n", system->total_count);
 
     int healthy_count = 0;
     int warning_count = 0;
@@ -226,242 +207,171 @@ bool chip_system_health_check(ChipSystem *system) {
     (void)warning_count;
     (void)critical_count;
 
-    // Example framework (uncomment and complete):
-    // printf("=== System Health Check ===\n");
-    //
-    // for (int i = 0; i < system->total_count; i++) {
-    //     bool chip_healthy = chip_health_check(&system->chips[i]);
-    //
-    //     if (chip_healthy) {
-    //         healthy_count++;
-    //         printf("  %s: HEALTHY\n", system->chips[i].chip_id);
-    //     } else {
-    //         if (system->chips[i].temperature > TEMP_CRITICAL_THRESHOLD) {
-    //             critical_count++;
-    //             printf("  %s: CRITICAL (%.1f°C)\n",
-    //                    system->chips[i].chip_id,
-    //                    system->chips[i].temperature);
-    //         } else {
-    //             warning_count++;
-    //             printf("  %s: WARNING\n", system->chips[i].chip_id);
-    //         }
-    //     }
-    // }
-    //
-    // printf("\nHealth Summary:\n");
-    // printf("  Healthy: %d\n", healthy_count);
-    // printf("  Warning: %d\n", warning_count);
-    // printf("  Critical: %d\n", critical_count);
-    // printf("  System Temperature: %.1f°C\n", system->system_temperature);
-    //
-    // bool system_ok = (critical_count == 0) && (warning_count <= system->total_count / 4);
-    // printf("  Overall Status: %s\n", system_ok ? "HEALTHY" : "NEEDS ATTENTION");
-    //
-    // system->system_healthy = system_ok;
-    // return system_ok;
+    printf("TODO: Implement chip_system_health_check function\n");
+    printf("  - Check health of all chips\n");
+    printf("  - Categorize by health status\n");
+    printf("  - Return overall system health\n");
 
-    return true; // Replace with actual implementation
+    return false; // Replace with actual implementation
 }
 
 /**
- * @brief Print system summary
+ * @brief Display summary information for all chips
  * @param system Pointer to ChipSystem structure
  */
-void chip_system_print_summary(const ChipSystem *system) {
-    // TODO: Implement comprehensive system summary
+void chip_system_display_summary(ChipSystem *system) {
+    // TODO: Implement system summary display
     //
     // Steps to complete:
     // 1. Validate input parameter
-    // 2. Print system-level statistics
-    // 3. Print summary of each chip
-    // 4. Show system health overview
-    // 5. Format output for readability
-
-    if (system == NULL) {
-        printf("ERROR: Cannot print NULL system summary\n");
-        return;
-    }
-
-    printf("TODO: Implement chip_system_print_summary function\n");
-    printf("  - System has %d chips\n", system->total_count);
-    printf("  - Active chips: %d\n", system->active_count);
-    printf("  - System healthy: %s\n", system->system_healthy ? "YES" : "NO");
-
-    // Example framework (uncomment and complete):
-    // printf("=== Chip System Summary ===\n");
-    // printf("Total Chips: %d\n", system->total_count);
-    // printf("Active Chips: %d\n", system->active_count);
-    // printf("System Temperature: %.1f°C\n", system->system_temperature);
-    // printf("System Health: %s\n", system->system_healthy ? "HEALTHY" : "ISSUES");
+    // 2. Print system header information
+    // 3. Loop through all chips and display key information
+    // 4. Show system statistics
+    // 5. Format output in a readable table format
     //
-    // printf("\nChip Details:\n");
-    // for (int i = 0; i < system->total_count; i++) {
-    //     printf("  [%d] %s: %.1f°C, %.2fV, %s\n",
-    //            i,
-    //            system->chips[i].chip_id,
-    //            system->chips[i].temperature,
-    //            system->chips[i].voltage,
-    //            system->chips[i].is_active ? "ACTIVE" : "INACTIVE");
-    // }
-    // printf("========================\n");
-}
-
-/**
- * @brief Sort chips by temperature (bubble sort for educational purposes)
- * @param system Pointer to ChipSystem structure
- * @param ascending true for ascending order, false for descending
- */
-void chip_system_sort_by_temperature(ChipSystem *system, bool ascending) {
-    // TODO: Implement chip sorting by temperature
-    //
-    // Steps to complete:
-    // 1. Validate input parameter
-    // 2. Implement bubble sort algorithm
-    // 3. Compare chips by temperature
-    // 4. Swap chips when needed
-    // 5. Handle both ascending and descending order
-    //
-    // This is educational - use bubble sort to practice array manipulation
-    // In production, you'd use qsort() or other efficient algorithms
+    // Information to display:
+    // - Chip ID, Status, Temperature, Active state
+    // - System totals and averages
+    // - Health summary
 
     if (system == NULL) {
         printf("ERROR: System pointer is NULL\n");
         return;
     }
 
-    printf("TODO: Implement chip_system_sort_by_temperature function\n");
-    printf("  - Sorting %d chips by temperature (%s)\n",
-           system->total_count,
-           ascending ? "ascending" : "descending");
-
-    // Example framework (uncomment and complete):
-    // printf("Sorting chips by temperature...\n");
-    //
-    // // Bubble sort implementation
-    // for (int i = 0; i < system->total_count - 1; i++) {
-    //     for (int j = 0; j < system->total_count - i - 1; j++) {
-    //         bool should_swap = false;
-    //
-    //         if (ascending) {
-    //             should_swap = system->chips[j].temperature > system->chips[j + 1].temperature;
-    //         } else {
-    //             should_swap = system->chips[j].temperature < system->chips[j + 1].temperature;
-    //         }
-    //
-    //         if (should_swap) {
-    //             // Swap the entire ChipState structures
-    //             ChipState temp = system->chips[j];
-    //             system->chips[j] = system->chips[j + 1];
-    //             system->chips[j + 1] = temp;
-    //         }
-    //     }
-    // }
-    //
-    // printf("Sorting complete\n");
+    printf("TODO: Implement chip_system_display_summary function\n");
+    printf("  - Display information for all chips\n");
+    printf("  - Show system statistics\n");
+    printf("  - Format as readable table\n");
 }
 
 /**
- * @brief Demonstrate string manipulation with chip IDs
+ * @brief Sort chips in the system by a specified criteria
  * @param system Pointer to ChipSystem structure
+ * @param sort_by_temp If true, sort by temperature; if false, sort by ID
  */
-void demonstrate_string_operations(ChipSystem *system) {
-    // TODO: Implement string manipulation demonstration
+void chip_system_sort_chips(ChipSystem *system, bool sort_by_temp) {
+    // TODO: Implement chip sorting
     //
     // Steps to complete:
-    // 1. Show string length calculation
-    // 2. Demonstrate string copying and concatenation
-    // 3. Show string comparison operations
-    // 4. Practice string formatting with chip data
-    // 5. Handle string safety (bounds checking)
+    // 1. Validate input parameter
+    // 2. Choose sorting criteria (temperature or ID)
+    // 3. Implement a simple sorting algorithm (bubble sort is fine)
+    // 4. Compare chips based on selected criteria
+    // 5. Swap chips when needed
+    // 6. Print sorting results
+    //
+    // HINT: For temperature sorting, compare chip->temperature values
+    // HINT: For ID sorting, use strcmp() to compare chip->chip_id strings
+    // HINT: You can swap entire ChipState structures
 
     if (system == NULL) {
         printf("ERROR: System pointer is NULL\n");
         return;
     }
 
-    printf("TODO: Implement demonstrate_string_operations function\n");
-    printf("  - Demonstrating string operations with chip IDs\n");
-
-    // Example framework (uncomment and complete):
-    // printf("=== String Operations Demo ===\n");
-    //
-    // for (int i = 0; i < system->total_count && i < 3; i++) {
-    //     ChipState *chip = &system->chips[i];
-    //
-    //     // String length
-    //     size_t id_length = strlen(chip->chip_id);
-    //     printf("Chip %d ID: '%s' (length: %zu)\n", i, chip->chip_id, id_length);
-    //
-    //     // String comparison
-    //     if (strncmp(chip->chip_id, "CHIP_", 5) == 0) {
-    //         printf("  ID starts with 'CHIP_'\n");
-    //     }
-    //
-    //     // String formatting
-    //     char status_string[64];
-    //     snprintf(status_string, sizeof(status_string),
-    //              "%s: %.1f°C, %s",
-    //              chip->chip_id,
-    //              chip->temperature,
-    //              chip->is_active ? "ACTIVE" : "INACTIVE");
-    //     printf("  Status: %s\n", status_string);
-    //
-    //     // String copying (safe)
-    //     char id_copy[CHIP_ID_LENGTH];
-    //     strncpy(id_copy, chip->chip_id, sizeof(id_copy) - 1);
-    //     id_copy[sizeof(id_copy) - 1] = '\0';
-    //     printf("  ID Copy: %s\n", id_copy);
-    // }
+    printf("TODO: Implement chip_system_sort_chips function\n");
+    printf("  - Sort chips by %s\n", sort_by_temp ? "temperature" : "ID");
+    printf("  - Use simple sorting algorithm\n");
 }
 
 /**
- * @brief Main function demonstrating Task 4
+ * @brief Simulate chip array operations for testing
+ */
+void simulate_chip_operations(void) {
+    // TODO: Implement simulation of chip operations
+    //
+    // Steps to complete:
+    // 1. Create a ChipSystem instance
+    // 2. Initialize the system with several chips
+    // 3. Perform various operations (update, search, count)
+    // 4. Demonstrate array manipulation
+    // 5. Show practical usage examples
+    //
+    // Operations to demonstrate:
+    // - System initialization
+    // - Batch updates
+    // - Chip searching
+    // - Health monitoring
+    // - Sorting operations
+
+    printf("TODO: Implement simulate_chip_operations function\n");
+    printf("  - Create and initialize chip system\n");
+    printf("  - Demonstrate array operations\n");
+    printf("  - Show practical usage examples\n");
+}
+
+/**
+ * @brief Main function to demonstrate multi-chip array operations
  */
 int main(void) {
-    printf("=== Day 3: Multi-Chip Test - Task 4 ===\n\n");
+    printf("=== Day 3: Multi-Chip Array Operations - Task 4 ===\n\n");
 
-    // Initialize chip system
-    ChipSystem test_system = {0};
-    int num_test_chips = 6;
+    // Initialize random seed for realistic simulation
+    srand((unsigned int)time(NULL));
 
-    printf("--- Chip System Initialization ---\n");
-    if (chip_system_init(&test_system, num_test_chips)) {
-        printf("✓ Chip system initialization successful\n");
+    // Test chip system initialization
+    printf("Testing Chip System Initialization\n");
+    printf("----------------------------------\n");
+    ChipSystem test_system;
+    memset(&test_system, 0, sizeof(ChipSystem)); // Clear the structure
+
+    if (chip_system_init(&test_system, 4)) {
+        printf("✓ System initialization successful\n");
     } else {
-        printf("✗ Chip system initialization failed (TODO: implement)\n");
+        printf("✗ System initialization failed\n");
     }
+    printf("\n");
 
-    printf("\n--- System Update Operations ---\n");
-    int updated_chips = chip_system_update_all(&test_system);
-    printf("Updated chips: %d\n", updated_chips);
+    // Test batch operations
+    printf("Testing Batch Operations\n");
+    printf("------------------------\n");
+    int updated = chip_system_update_all(&test_system);
+    printf("Updated %d chips\n", updated);
 
-    printf("\n--- Chip Search Operations ---\n");
-    const char* search_ids[] = {"CHIP_00", "CHIP_03", "CHIP_99"};
-    for (int i = 0; i < 3; i++) {
-        ChipState* found_chip = chip_system_find_by_id(&test_system, search_ids[i]);
-        if (found_chip != NULL) {
-            printf("✓ Found chip: %s\n", search_ids[i]);
-        } else {
-            printf("✗ Chip not found: %s (TODO: implement search)\n", search_ids[i]);
-        }
+    int active_count = chip_system_count_chips(&test_system, true);
+    int total_count = chip_system_count_chips(&test_system, false);
+    printf("Active chips: %d, Total chips: %d\n", active_count, total_count);
+    printf("\n");
+
+    // Test chip search
+    printf("Testing Chip Search\n");
+    printf("-------------------\n");
+    ChipState *found_chip = chip_system_find_by_id(&test_system, "CHIP_01");
+    if (found_chip != NULL) {
+        printf("✓ Found chip: %s\n", found_chip->chip_id);
+    } else {
+        printf("✗ Chip not found\n");
     }
+    printf("\n");
 
-    printf("\n--- System Health Check ---\n");
+    // Test health check
+    printf("Testing System Health Check\n");
+    printf("---------------------------\n");
     bool system_healthy = chip_system_health_check(&test_system);
-    printf("System health status: %s\n", system_healthy ? "HEALTHY" : "NEEDS ATTENTION");
+    printf("System health: %s\n", system_healthy ? "HEALTHY" : "ISSUES DETECTED");
+    printf("\n");
 
-    printf("\n--- System Summary ---\n");
-    chip_system_print_summary(&test_system);
+    // Test display and sorting
+    printf("Testing Display and Sorting\n");
+    printf("---------------------------\n");
+    chip_system_display_summary(&test_system);
 
-    printf("\n--- Chip Sorting Demo ---\n");
-    chip_system_sort_by_temperature(&test_system, true);
-    printf("Chips sorted by temperature (ascending)\n");
+    printf("Sorting by temperature...\n");
+    chip_system_sort_chips(&test_system, true);
 
-    printf("\n--- String Operations Demo ---\n");
-    demonstrate_string_operations(&test_system);
+    printf("Sorting by ID...\n");
+    chip_system_sort_chips(&test_system, false);
+    printf("\n");
 
-    printf("\n=== Task 4 Complete ===\n");
-    printf("Next: Implement ai_enhanced_validation.c for Task 5\n");
+    // Run simulation
+    printf("Running Chip Operations Simulation\n");
+    printf("----------------------------------\n");
+    simulate_chip_operations();
+
+    printf("\n=== Task 4 Completion Status ===\n");
+    printf("Review your implementations above for correctness.\n");
+    printf("Next: Continue to ai_enhanced_validation.c for Task 5\n");
 
     return 0;
 }

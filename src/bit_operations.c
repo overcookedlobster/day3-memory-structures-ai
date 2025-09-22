@@ -1,10 +1,16 @@
 /**
- * @file bit_operations.c
- * @brief Day 3 Task 3: Bit Manipulation Operations (50 minutes)
+ * Day 3: Memory Management and Data Structures - Bit Operations
  *
- * This file implements comprehensive bit manipulation operations for register
- * control and status checking. Students will master bitwise operations,
- * field extraction/insertion, and register manipulation techniques.
+ * Student Name: ___________________
+ * Date: ___________________
+ *
+ * INSTRUCTIONS:
+ * This file contains skeleton implementations for Task 3: Bit Manipulation.
+ * Complete each TODO section to implement the required functionality.
+ *
+ * Task 3: Bit Manipulation (15 points)
+ *
+ * Read the comments carefully and implement each function step by step.
  */
 
 #include <stdio.h>
@@ -16,8 +22,6 @@
 
 /**
  * Task 3: Bit Manipulation Operations (50 minutes)
- *
- * TODO: Implement comprehensive bit manipulation for register operations
  *
  * Learning objectives:
  * - Master SET_BIT, CLEAR_BIT, TOGGLE_BIT, CHECK_BIT macros
@@ -46,341 +50,298 @@ void demonstrate_basic_bit_ops(uint32_t initial_value) {
     // - Clear reset bit (bit 1)
     // - Toggle test mode bit (bit 2)
     // - Check status bits
-
-    printf("TODO: Implement demonstrate_basic_bit_ops function\n");
-    printf("  - Starting value: 0x%08X\n", initial_value);
-    printf("  - Demonstrate SET_BIT, CLEAR_BIT, TOGGLE_BIT, CHECK_BIT\n");
-    printf("  - Show register value after each operation\n");
+    //
+    // HINT: Use the macros defined in bit_macros.h
+    // HINT: Print binary representation to visualize changes
 
     uint32_t reg = initial_value;
     (void)reg; // Suppress unused variable warning
 
+    printf("TODO: Implement demonstrate_basic_bit_ops function\n");
+    printf("  - Initial value: 0x%08X\n", initial_value);
+    printf("  - Demonstrate SET_BIT, CLEAR_BIT, TOGGLE_BIT operations\n");
+    printf("  - Show register value after each operation\n");
+
     // Example framework (uncomment and complete):
     // printf("Initial register: 0x%08X\n", reg);
     //
-    // SET_BIT(reg, CTRL_ENABLE_BIT);
-    // printf("After SET_BIT(ENABLE): 0x%08X\n", reg);
+    // SET_BIT(reg, 0);  // Set enable bit
+    // printf("After SET_BIT(0): 0x%08X\n", reg);
     //
-    // CLEAR_BIT(reg, CTRL_RESET_BIT);
-    // printf("After CLEAR_BIT(RESET): 0x%08X\n", reg);
+    // CLEAR_BIT(reg, 1);  // Clear reset bit
+    // printf("After CLEAR_BIT(1): 0x%08X\n", reg);
     //
-    // TOGGLE_BIT(reg, CTRL_TEST_MODE_BIT);
-    // printf("After TOGGLE_BIT(TEST_MODE): 0x%08X\n", reg);
-    //
-    // if (CHECK_BIT(reg, CTRL_ENABLE_BIT)) {
-    //     printf("Enable bit is SET\n");
-    // } else {
-    //     printf("Enable bit is CLEAR\n");
-    // }
+    // Add more operations here...
 }
 
 /**
- * @brief Implement register field operations
- * @param reg Pointer to register value
- * @param mode New mode value (3 bits)
- * @param speed New speed value (2 bits)
- * @param voltage New voltage value (4 bits)
+ * @brief Extract a multi-bit field from a register
+ * @param reg_value Register value to extract from
+ * @param start_bit Starting bit position (0-based)
+ * @param num_bits Number of bits in the field
+ * @return Extracted field value
  */
-void configure_register_fields(uint32_t *reg, uint8_t mode, uint8_t speed, uint8_t voltage) {
-    // TODO: Implement multi-bit field operations
+uint32_t extract_bit_field(uint32_t reg_value, int start_bit, int num_bits) {
+    // TODO: Implement bit field extraction
+    //
+    // Steps to complete:
+    // 1. Validate input parameters (start_bit and num_bits)
+    // 2. Create a mask with the appropriate number of bits
+    // 3. Shift the register value to align the field
+    // 4. Apply the mask to extract only the desired bits
+    // 5. Return the extracted value
+    //
+    // Formula: ((reg_value >> start_bit) & ((1U << num_bits) - 1))
+    //
+    // HINT: (1U << num_bits) - 1 creates a mask with num_bits set to 1
+    // HINT: Always validate that start_bit + num_bits <= 32
+
+    if (start_bit < 0 || num_bits <= 0 || start_bit + num_bits > 32) {
+        printf("ERROR: Invalid bit field parameters\n");
+        return 0;
+    }
+
+    printf("TODO: Implement extract_bit_field function\n");
+    printf("  - Register: 0x%08X, Start: %d, Bits: %d\n", reg_value, start_bit, num_bits);
+
+    return 0; // Replace with actual implementation
+}
+
+/**
+ * @brief Insert a value into a multi-bit field in a register
+ * @param reg_value Original register value
+ * @param field_value Value to insert
+ * @param start_bit Starting bit position (0-based)
+ * @param num_bits Number of bits in the field
+ * @return Updated register value
+ */
+uint32_t insert_bit_field(uint32_t reg_value, uint32_t field_value, int start_bit, int num_bits) {
+    // TODO: Implement bit field insertion
     //
     // Steps to complete:
     // 1. Validate input parameters
-    // 2. Use INSERT_FIELD macro to set mode field (bits 2:0)
-    // 3. Use INSERT_FIELD macro to set speed field (bits 5:4)
-    // 4. Use INSERT_FIELD macro to set voltage field (bits 11:8)
-    // 5. Verify field values using EXTRACT_FIELD
-    // 6. Print before/after register values
+    // 2. Create a mask for the field
+    // 3. Clear the target field in the register
+    // 4. Mask the field_value to ensure it fits
+    // 5. Shift the field_value to the correct position
+    // 6. OR the shifted value with the cleared register
+    // 7. Return the updated register value
     //
-    // Field definitions (from bit_macros.h):
-    // - CONFIG_MODE_POS = 0, CONFIG_MODE_WIDTH = 3
-    // - CONFIG_SPEED_POS = 4, CONFIG_SPEED_WIDTH = 2
-    // - CONFIG_VOLTAGE_POS = 8, CONFIG_VOLTAGE_WIDTH = 4
+    // Algorithm:
+    // - mask = ((1U << num_bits) - 1) << start_bit
+    // - reg_cleared = reg_value & ~mask
+    // - field_masked = (field_value & ((1U << num_bits) - 1)) << start_bit
+    // - result = reg_cleared | field_masked
 
-    if (reg == NULL) {
-        printf("ERROR: Register pointer is NULL\n");
-        return;
+    if (start_bit < 0 || num_bits <= 0 || start_bit + num_bits > 32) {
+        printf("ERROR: Invalid bit field parameters\n");
+        return reg_value;
     }
 
-    printf("TODO: Implement configure_register_fields function\n");
-    printf("  - Set mode field (3 bits): %d\n", mode);
-    printf("  - Set speed field (2 bits): %d\n", speed);
-    printf("  - Set voltage field (4 bits): %d\n", voltage);
-    printf("  - Current register value: 0x%08X\n", *reg);
+    printf("TODO: Implement insert_bit_field function\n");
+    printf("  - Register: 0x%08X, Field: 0x%08X, Start: %d, Bits: %d\n",
+           reg_value, field_value, start_bit, num_bits);
 
-    // Example framework (uncomment and complete):
-    // uint32_t old_value = *reg;
-    //
-    // INSERT_FIELD(*reg, mode, CONFIG_MODE_POS, CONFIG_MODE_WIDTH);
-    // INSERT_FIELD(*reg, speed, CONFIG_SPEED_POS, CONFIG_SPEED_WIDTH);
-    // INSERT_FIELD(*reg, voltage, CONFIG_VOLTAGE_POS, CONFIG_VOLTAGE_WIDTH);
-    //
-    // printf("Register updated: 0x%08X -> 0x%08X\n", old_value, *reg);
-    //
-    // // Verify the fields were set correctly
-    // uint8_t read_mode = EXTRACT_FIELD(*reg, CONFIG_MODE_POS, CONFIG_MODE_WIDTH);
-    // uint8_t read_speed = EXTRACT_FIELD(*reg, CONFIG_SPEED_POS, CONFIG_SPEED_WIDTH);
-    // uint8_t read_voltage = EXTRACT_FIELD(*reg, CONFIG_VOLTAGE_POS, CONFIG_VOLTAGE_WIDTH);
-    //
-    // printf("Verification - Mode: %d, Speed: %d, Voltage: %d\n",
-    //        read_mode, read_speed, read_voltage);
+    return reg_value; // Replace with actual implementation
 }
 
 /**
- * @brief Analyze and decode status register
- * @param status_reg Status register value to analyze
- * @return Number of active status flags
+ * @brief Manage status flags in a register using bit operations
+ * @param status_reg Pointer to status register
+ * @param flag_bit Bit position of the flag
+ * @param set_flag True to set flag, false to clear
  */
-int analyze_status_register(uint32_t status_reg) {
-    // TODO: Implement status register analysis
+void manage_status_flag(uint32_t *status_reg, int flag_bit, bool set_flag) {
+    // TODO: Implement status flag management
     //
     // Steps to complete:
-    // 1. Check each status bit using CHECK_BIT or IS_BIT_SET
-    // 2. Count the number of active status flags
-    // 3. Print human-readable status information
-    // 4. Identify critical vs warning conditions
-    // 5. Return total count of active flags
+    // 1. Validate input parameters (check for NULL pointer)
+    // 2. Use appropriate bit operation based on set_flag
+    // 3. If set_flag is true, use SET_BIT
+    // 4. If set_flag is false, use CLEAR_BIT
+    // 5. Print the operation performed
     //
-    // Status bits to check:
-    // - STATUS_READY_BIT: System ready
-    // - STATUS_ERROR_BIT: Error condition
-    // - STATUS_BUSY_BIT: System busy
-    // - STATUS_OVERTEMP_BIT: Over-temperature
-    // - STATUS_UNDERVOLT_BIT: Under-voltage
+    // HINT: Use the macros from bit_macros.h
+    // HINT: Always validate pointers before dereferencing
 
-    printf("TODO: Implement analyze_status_register function\n");
-    printf("  - Status register: 0x%08X\n", status_reg);
-    printf("  - Decode individual status bits\n");
-    printf("  - Count active flags\n");
-
-    int active_flags = 0;
-
-    // Example framework (uncomment and complete):
-    // printf("Status Analysis:\n");
-    //
-    // if (IS_BIT_SET(status_reg, STATUS_READY_BIT)) {
-    //     printf("  ‚úì READY: System is ready\n");
-    //     active_flags++;
-    // } else {
-    //     printf("  ‚úó READY: System not ready\n");
-    // }
-    //
-    // if (IS_BIT_SET(status_reg, STATUS_ERROR_BIT)) {
-    //     printf("  ‚ö† ERROR: Error condition detected\n");
-    //     active_flags++;
-    // }
-    //
-    // if (IS_BIT_SET(status_reg, STATUS_BUSY_BIT)) {
-    //     printf("  ‚è≥ BUSY: System is busy\n");
-    //     active_flags++;
-    // }
-    //
-    // if (IS_BIT_SET(status_reg, STATUS_OVERTEMP_BIT)) {
-    //     printf("  Ì†ºÌº°Ô∏è OVERTEMP: Temperature warning\n");
-    //     active_flags++;
-    // }
-    //
-    // if (IS_BIT_SET(status_reg, STATUS_UNDERVOLT_BIT)) {
-    //     printf("  ‚ö° UNDERVOLT: Voltage warning\n");
-    //     active_flags++;
-    // }
-    //
-    // printf("Total active flags: %d\n", active_flags);
-
-    return active_flags;
-}
-
-/**
- * @brief Implement error register management
- * @param error_reg Pointer to error register
- * @param error_type Type of error to set/clear
- * @param set_error True to set error, false to clear
- */
-void manage_error_register(uint32_t *error_reg, int error_type, bool set_error) {
-    // TODO: Implement error register management
-    //
-    // Steps to complete:
-    // 1. Validate input parameters
-    // 2. Use appropriate bit manipulation based on set_error flag
-    // 3. Handle different error types (parity, timeout, overflow, etc.)
-    // 4. Implement error priority and masking
-    // 5. Log error operations for debugging
-    //
-    // Error types (from bit_macros.h):
-    // - ERROR_PARITY_BIT: Parity error
-    // - ERROR_TIMEOUT_BIT: Timeout error
-    // - ERROR_OVERFLOW_BIT: Buffer overflow
-    // - ERROR_UNDERFLOW_BIT: Buffer underflow
-    // - ERROR_CHECKSUM_BIT: Checksum error
-
-    if (error_reg == NULL) {
-        printf("ERROR: Error register pointer is NULL\n");
+    if (status_reg == NULL) {
+        printf("ERROR: Invalid status register pointer\n");
         return;
     }
 
-    printf("TODO: Implement manage_error_register function\n");
-    printf("  - Error type: %d\n", error_type);
-    printf("  - Operation: %s\n", set_error ? "SET" : "CLEAR");
-    printf("  - Current error register: 0x%08X\n", *error_reg);
+    if (flag_bit < 0 || flag_bit >= 32) {
+        printf("ERROR: Invalid flag bit position: %d\n", flag_bit);
+        return;
+    }
+
+    printf("TODO: Implement manage_status_flag function\n");
+    printf("  - Register: 0x%08X, Bit: %d, Set: %s\n",
+           *status_reg, flag_bit, set_flag ? "true" : "false");
 
     // Example framework (uncomment and complete):
-    // uint32_t old_value = *error_reg;
-    //
-    // if (set_error) {
-    //     SET_BIT(*error_reg, error_type);
-    //     printf("Set error bit %d\n", error_type);
+    // if (set_flag) {
+    //     SET_BIT(*status_reg, flag_bit);
+    //     printf("Set flag bit %d\n", flag_bit);
     // } else {
-    //     CLEAR_BIT(*error_reg, error_type);
-    //     printf("Cleared error bit %d\n", error_type);
+    //     CLEAR_BIT(*status_reg, flag_bit);
+    //     printf("Cleared flag bit %d\n", flag_bit);
     // }
-    //
-    // printf("Error register: 0x%08X -> 0x%08X\n", old_value, *error_reg);
-    //
-    // // Count total errors
-    // int total_errors = COUNT_ONES(*error_reg);
-    // printf("Total active errors: %d\n", total_errors);
 }
 
 /**
  * @brief Demonstrate advanced bit manipulation techniques
  */
 void demonstrate_advanced_bit_ops(void) {
-    // TODO: Implement advanced bit manipulation demonstration
+    // TODO: Implement advanced bit operation demonstration
     //
     // Steps to complete:
-    // 1. Show bit masking with multiple bits
-    // 2. Demonstrate byte manipulation within registers
-    // 3. Show endianness conversion
-    // 4. Practice bit counting and finding operations
-    // 5. Implement bit field validation
+    // 1. Create a test register with known bit patterns
+    // 2. Demonstrate field extraction with different field sizes
+    // 3. Show field insertion with various values
+    // 4. Practice bit rotation and shifting operations
+    // 5. Implement bit counting (population count)
+    // 6. Show practical examples like parsing configuration registers
     //
     // Advanced techniques to demonstrate:
-    // - Multi-bit masks and operations
-    // - Byte swapping and endianness
-    // - Bit counting (population count)
-    // - Finding first/last set bits
-    // - Bit field validation and bounds checking
-
-    printf("TODO: Implement demonstrate_advanced_bit_ops function\n");
-    printf("  - Show multi-bit masking operations\n");
-    printf("  - Demonstrate byte manipulation\n");
-    printf("  - Show bit counting and finding\n");
+    // - Multi-bit field operations
+    // - Bit rotation (left and right)
+    // - Population count (count set bits)
+    // - Find first set bit
+    // - Reverse bit order
 
     uint32_t test_reg = 0x12345678;
     (void)test_reg; // Suppress unused variable warning
 
+    printf("TODO: Implement demonstrate_advanced_bit_ops function\n");
+    printf("  - Show field extraction and insertion\n");
+    printf("  - Demonstrate bit rotation and shifting\n");
+    printf("  - Implement bit counting operations\n");
+
     // Example framework (uncomment and complete):
-    // printf("Advanced Bit Operations Demo:\n");
     // printf("Test register: 0x%08X\n", test_reg);
     //
-    // // Multi-bit operations
-    // uint32_t mask = MASK_4BIT << 8;  // 4-bit mask at position 8
-    // printf("4-bit mask at pos 8: 0x%08X\n", mask);
+    // // Extract 4-bit field starting at bit 8
+    // uint32_t field = extract_bit_field(test_reg, 8, 4);
+    // printf("Extracted field (bits 8-11): 0x%X\n", field);
     //
-    // // Byte manipulation
-    // printf("Byte 0: 0x%02X\n", GET_BYTE_0(test_reg));
-    // printf("Byte 1: 0x%02X\n", GET_BYTE_1(test_reg));
-    // printf("Byte 2: 0x%02X\n", GET_BYTE_2(test_reg));
-    // printf("Byte 3: 0x%02X\n", GET_BYTE_3(test_reg));
-    //
-    // // Bit counting
-    // printf("Number of 1s: %d\n", COUNT_ONES(test_reg));
-    // printf("Number of 0s: %d\n", COUNT_ZEROS(test_reg));
-    //
-    // // Endianness conversion
-    // uint32_t swapped = SWAP_BYTES_32(test_reg);
-    // printf("Byte swapped: 0x%08X -> 0x%08X\n", test_reg, swapped);
+    // // Insert new value into field
+    // test_reg = insert_bit_field(test_reg, 0xA, 8, 4);
+    // printf("After field insertion: 0x%08X\n", test_reg);
 }
 
 /**
- * @brief Test bit manipulation with ChipState structure
+ * @brief Apply bit operations to ChipState structure
  * @param chip Pointer to ChipState structure
  */
-void test_chip_bit_operations(ChipState *chip) {
+void chip_bit_operations(ChipState *chip) {
     // TODO: Implement chip-specific bit operations
     //
     // Steps to complete:
     // 1. Validate input parameter
-    // 2. Manipulate control register bits
-    // 3. Analyze status register
-    // 4. Manage error conditions
-    // 5. Update chip state based on bit operations
+    // 2. Use bit operations on chip registers
+    // 3. Set/clear specific control bits
+    // 4. Extract status information from status register
+    // 5. Update error flags using bit manipulation
+    // 6. Demonstrate practical register manipulation
     //
-    // Operations to perform:
-    // - Enable/disable chip via control register
-    // - Set test mode and debug flags
-    // - Simulate error conditions
-    // - Check and clear status flags
+    // Example operations:
+    // - Set enable bit in control register
+    // - Clear reset bit
+    // - Extract temperature sensor status
+    // - Set error flags based on conditions
 
     if (chip == NULL) {
-        printf("ERROR: Chip pointer is NULL\n");
+        printf("ERROR: Invalid chip pointer\n");
         return;
     }
 
-    printf("TODO: Implement test_chip_bit_operations function\n");
-    printf("  - Chip ID: %s\n", chip->chip_id);
-    printf("  - Manipulate control register bits\n");
-    printf("  - Analyze status and error registers\n");
+    printf("TODO: Implement chip_bit_operations function\n");
+    printf("  - Chip: %s\n", chip->chip_id);
+    printf("  - Apply bit operations to chip registers\n");
+    printf("  - Demonstrate practical register manipulation\n");
 
     // Example framework (uncomment and complete):
-    // printf("Testing bit operations on chip: %s\n", chip->chip_id);
+    // printf("Before bit operations:\n");
+    // printf("  Control: 0x%08X, Status: 0x%08X, Error: 0x%08X\n",
+    //        chip->control_reg, chip->status_reg, chip->error_reg);
     //
-    // // Enable the chip
-    // SET_BIT(chip->control_reg, CTRL_ENABLE_BIT);
-    // printf("Chip enabled - Control: 0x%08X\n", chip->control_reg);
+    // // Set enable bit (bit 0) in control register
+    // SET_BIT(chip->control_reg, 0);
     //
-    // // Set test mode
-    // SET_BIT(chip->control_reg, CTRL_TEST_MODE_BIT);
-    // printf("Test mode enabled - Control: 0x%08X\n", chip->control_reg);
+    // // Clear reset bit (bit 1) in control register
+    // CLEAR_BIT(chip->control_reg, 1);
     //
-    // // Simulate status conditions
-    // SET_BIT(chip->status_reg, STATUS_READY_BIT);
-    // SET_BIT(chip->status_reg, STATUS_BUSY_BIT);
+    // // Extract status field (bits 4-7) from status register
+    // uint32_t status_field = extract_bit_field(chip->status_reg, 4, 4);
+    // printf("Status field: 0x%X\n", status_field);
     //
-    // // Analyze status
-    // int flags = analyze_status_register(chip->status_reg);
-    // printf("Status analysis complete - %d flags active\n", flags);
-    //
-    // // Test error management
-    // manage_error_register(&chip->error_reg, ERROR_PARITY_BIT, true);
-    // manage_error_register(&chip->error_reg, ERROR_TIMEOUT_BIT, true);
+    // printf("After bit operations:\n");
+    // printf("  Control: 0x%08X, Status: 0x%08X, Error: 0x%08X\n",
+    //        chip->control_reg, chip->status_reg, chip->error_reg);
 }
 
 /**
- * @brief Main function demonstrating Task 3
+ * @brief Main function to demonstrate bit manipulation operations
  */
 int main(void) {
     printf("=== Day 3: Bit Operations - Task 3 ===\n\n");
 
-    // Demonstrate basic bit manipulation
-    printf("--- Basic Bit Manipulation ---\n");
-    demonstrate_basic_bit_ops(0x00000000);
+    // Test basic bit operations
+    printf("Testing Basic Bit Operations\n");
+    printf("----------------------------\n");
+    demonstrate_basic_bit_ops(0x12345678);
+    printf("\n");
 
-    printf("\n--- Register Field Operations ---\n");
-    uint32_t config_reg = 0x12345678;
-    configure_register_fields(&config_reg, 5, 2, 12);
+    // Test bit field operations
+    printf("Testing Bit Field Operations\n");
+    printf("----------------------------\n");
+    uint32_t test_reg = 0xABCDEF00;
 
-    printf("\n--- Status Register Analysis ---\n");
-    uint32_t status = 0x0000001B;  // Multiple flags set
-    int active_flags = analyze_status_register(status);
-    printf("Analysis complete: %d active flags\n", active_flags);
+    printf("Testing field extraction...\n");
+    uint32_t extracted = extract_bit_field(test_reg, 8, 8);
+    printf("Expected vs Actual: 0xEF vs 0x%02X\n", extracted);
 
-    printf("\n--- Error Register Management ---\n");
-    uint32_t error_reg = 0x00000000;
-    manage_error_register(&error_reg, ERROR_PARITY_BIT, true);
-    manage_error_register(&error_reg, ERROR_TIMEOUT_BIT, true);
-    manage_error_register(&error_reg, ERROR_PARITY_BIT, false);
+    printf("Testing field insertion...\n");
+    uint32_t updated = insert_bit_field(test_reg, 0x42, 8, 8);
+    printf("Original: 0x%08X, Updated: 0x%08X\n", test_reg, updated);
+    printf("\n");
 
-    printf("\n--- Advanced Bit Operations ---\n");
+    // Test status flag management
+    printf("Testing Status Flag Management\n");
+    printf("------------------------------\n");
+    uint32_t status = 0x00000000;
+    printf("Initial status: 0x%08X\n", status);
+
+    manage_status_flag(&status, 0, true);   // Set bit 0
+    manage_status_flag(&status, 4, true);   // Set bit 4
+    manage_status_flag(&status, 0, false);  // Clear bit 0
+
+    printf("Final status: 0x%08X\n", status);
+    printf("\n");
+
+    // Test advanced operations
+    printf("Testing Advanced Bit Operations\n");
+    printf("-------------------------------\n");
     demonstrate_advanced_bit_ops();
+    printf("\n");
 
-    printf("\n--- Chip Bit Operations Test ---\n");
-    ChipState test_chip = {0};
+    // Test with ChipState structure
+    printf("Testing Chip Bit Operations\n");
+    printf("---------------------------\n");
+    ChipState test_chip;
     strncpy(test_chip.chip_id, "BIT_TEST_01", sizeof(test_chip.chip_id) - 1);
-    test_chip_bit_operations(&test_chip);
+    test_chip.chip_id[sizeof(test_chip.chip_id) - 1] = '\0';
+    test_chip.control_reg = 0x00000000;
+    test_chip.status_reg = 0x12345678;
+    test_chip.error_reg = 0x00000000;
+    test_chip.temperature = 25.0f;
+    test_chip.is_active = true;
 
-    printf("\n=== Task 3 Complete ===\n");
-    printf("Next: Implement multi_chip_test.c for Task 4\n");
+    chip_bit_operations(&test_chip);
+
+    printf("\n=== Task 3 Completion Status ===\n");
+    printf("Review your implementations above for correctness.\n");
+    printf("Next: Continue to multi_chip_test.c for Task 4\n");
 
     return 0;
 }
