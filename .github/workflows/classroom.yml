@@ -32,28 +32,114 @@ jobs:
       - name: Make Test Scripts Executable
         run: chmod +x tests/*.sh
 
-      - name: Run Autograding Tests
-        uses: education/autograding@v1
-        id: autograder
+      - name: Task 1 - Pointer Operations
+        id: test-pointers
+        run: |
+          echo "Testing Task 1: Pointer Operations..."
+          if ./tests/test_pointers.sh 2>&1 | grep -q "POINTER_TESTS_PASSED"; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+            echo "points=15" >> $GITHUB_OUTPUT
+          else
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+            echo "points=0" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Task 2 - Structure Implementation
+        id: test-structures
+        run: |
+          echo "Testing Task 2: Structure Implementation..."
+          if ./tests/test_structures.sh 2>&1 | grep -q "STRUCTURE_TESTS_PASSED"; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+            echo "points=15" >> $GITHUB_OUTPUT
+          else
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+            echo "points=0" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Task 3 - Bit Manipulation
+        id: test-bits
+        run: |
+          echo "Testing Task 3: Bit Manipulation..."
+          if ./tests/test_bit_operations.sh 2>&1 | grep -q "BIT_TESTS_PASSED"; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+            echo "points=15" >> $GITHUB_OUTPUT
+          else
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+            echo "points=0" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Task 4 - Array Handling
+        id: test-arrays
+        run: |
+          echo "Testing Task 4: Array Handling..."
+          if ./tests/test_multi_chip.sh 2>&1 | grep -q "MULTI_CHIP_TESTS_PASSED"; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+            echo "points=10" >> $GITHUB_OUTPUT
+          else
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+            echo "points=0" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Task 5 - AI Integration
+        id: test-ai
+        run: |
+          echo "Testing Task 5: AI Integration..."
+          if ./tests/test_ai_documentation.sh 2>&1 | grep -q "AI_DOCS_FOUND"; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+            echo "points=5" >> $GITHUB_OUTPUT
+          else
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+            echo "points=0" >> $GITHUB_OUTPUT
+          fi
         continue-on-error: true
 
       - name: Generate Detailed Summary
         run: |
-          # Create detailed summary for students
+          # Calculate total score
+          pointer_points=${{ steps.test-pointers.outputs.points }}
+          structure_points=${{ steps.test-structures.outputs.points }}
+          bit_points=${{ steps.test-bits.outputs.points }}
+          array_points=${{ steps.test-arrays.outputs.points }}
+          ai_points=${{ steps.test-ai.outputs.points }}
+
+          total_points=$((pointer_points + structure_points + bit_points + array_points + ai_points))
+
+          # Create detailed summary with tabular results
           echo "## Autograding Results (Code Functionality)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Automated Test Results (60/150 points)" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Results Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "This autograder evaluates functional correctness only." >> $GITHUB_STEP_SUMMARY
-          echo "Your instructor will manually grade the remaining 90 points." >> $GITHUB_STEP_SUMMARY
+          echo "| Task | Status | Points Earned | Max Points | Description |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|---------------|------------|-------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Task 1: Pointer Operations | ${{ steps.test-pointers.outputs.status }} | $pointer_points | 15 | Memory addressing and dereferencing |" >> $GITHUB_STEP_SUMMARY
+          echo "| Task 2: Structure Implementation | ${{ steps.test-structures.outputs.status }} | $structure_points | 15 | ChipState design and usage |" >> $GITHUB_STEP_SUMMARY
+          echo "| Task 3: Bit Manipulation | ${{ steps.test-bits.outputs.status }} | $bit_points | 15 | Register operations and bit fields |" >> $GITHUB_STEP_SUMMARY
+          echo "| Task 4: Array Handling | ${{ steps.test-arrays.outputs.status }} | $array_points | 10 | Multi-chip array operations |" >> $GITHUB_STEP_SUMMARY
+          echo "| Task 5: AI Integration | ${{ steps.test-ai.outputs.status }} | $ai_points | 5 | AI documentation and functionality |" >> $GITHUB_STEP_SUMMARY
+          echo "| **TOTAL AUTOMATED** | **$([ $total_points -eq 60 ] && echo "COMPLETE" || echo "PARTIAL")** | **$total_points** | **60** | **Functional correctness only** |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Test Categories" >> $GITHUB_STEP_SUMMARY
-          echo "- **Task 1: Pointer Operations (15 pts)** - Memory addressing and dereferencing" >> $GITHUB_STEP_SUMMARY
-          echo "- **Task 2: Structure Implementation (15 pts)** - ChipState design and usage" >> $GITHUB_STEP_SUMMARY
-          echo "- **Task 3: Bit Manipulation (15 pts)** - Register operations and bit fields" >> $GITHUB_STEP_SUMMARY
-          echo "- **Task 4: Array Handling (10 pts)** - Multi-chip array operations" >> $GITHUB_STEP_SUMMARY
-          echo "- **Task 5: AI Integration (5 pts)** - AI documentation and basic functionality" >> $GITHUB_STEP_SUMMARY
+
+          # Add score interpretation
+          percentage=$((total_points * 100 / 60))
+          if [ $total_points -eq 60 ]; then
+            echo "### Excellent! Perfect Automated Score (100%)" >> $GITHUB_STEP_SUMMARY
+            echo "All functional requirements implemented correctly." >> $GITHUB_STEP_SUMMARY
+          elif [ $percentage -ge 80 ]; then
+            echo "### Great Progress! ($percentage% of automated tests)" >> $GITHUB_STEP_SUMMARY
+            echo "Most functionality working. Review failing tests above." >> $GITHUB_STEP_SUMMARY
+          elif [ $percentage -ge 60 ]; then
+            echo "### Good Start! ($percentage% of automated tests)" >> $GITHUB_STEP_SUMMARY
+            echo "Core functionality developing. Focus on failing test cases." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Keep Working! ($percentage% of automated tests)" >> $GITHUB_STEP_SUMMARY
+            echo "Significant implementation needed. Review TODO comments in source files." >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
+
           echo "### Manual Grading Required (90/150 points)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Your instructor will evaluate:" >> $GITHUB_STEP_SUMMARY
@@ -63,12 +149,15 @@ jobs:
           echo "- **GitHub Workflow (15 pts)**: Commit quality, repository organization" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
-          echo "1. **Review test results** above to see which functions need work" >> $GITHUB_STEP_SUMMARY
-          echo "2. **Complete your implementations** for any failing tests" >> $GITHUB_STEP_SUMMARY
+          echo "1. **Review failing tests** in the table above" >> $GITHUB_STEP_SUMMARY
+          echo "2. **Complete TODO implementations** in source files" >> $GITHUB_STEP_SUMMARY
           echo "3. **Document AI usage** in ai_docs/AI_USAGE_LOG.md" >> $GITHUB_STEP_SUMMARY
           echo "4. **Commit your changes** with descriptive messages" >> $GITHUB_STEP_SUMMARY
           echo "5. **Submit for instructor review** when functional tests pass" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Remember**: Passing automated tests is just the beginning!" >> $GITHUB_STEP_SUMMARY
-          echo "Focus on writing clean, well-documented, professional code." >> $GITHUB_STEP_SUMMARY
+          echo "**Remember**: Automated tests (60 pts) + Manual grading (90 pts) = 150 total points" >> $GITHUB_STEP_SUMMARY
+
+      - name: Run Official Autograding
+        uses: education/autograding@v1
+        continue-on-error: true
 
