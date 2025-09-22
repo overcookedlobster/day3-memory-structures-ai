@@ -40,21 +40,21 @@ jobs:
       - name: Generate Detailed Summary
         run: |
           # Create detailed summary for students
-          echo "## í ¼í¾¯ Autograding Results (Code Functionality)" >> $GITHUB_STEP_SUMMARY
+          echo "## Autograding Results (Code Functionality)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### í ½í³Š Automated Test Results (60/150 points)" >> $GITHUB_STEP_SUMMARY
+          echo "### Automated Test Results (60/150 points)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "This autograder evaluates functional correctness only." >> $GITHUB_STEP_SUMMARY
           echo "Your instructor will manually grade the remaining 90 points." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### í ½í³‹ Test Categories" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Categories" >> $GITHUB_STEP_SUMMARY
           echo "- **Task 1: Pointer Operations (15 pts)** - Memory addressing and dereferencing" >> $GITHUB_STEP_SUMMARY
           echo "- **Task 2: Structure Implementation (15 pts)** - ChipState design and usage" >> $GITHUB_STEP_SUMMARY
           echo "- **Task 3: Bit Manipulation (15 pts)** - Register operations and bit fields" >> $GITHUB_STEP_SUMMARY
           echo "- **Task 4: Array Handling (10 pts)** - Multi-chip array operations" >> $GITHUB_STEP_SUMMARY
           echo "- **Task 5: AI Integration (5 pts)** - AI documentation and basic functionality" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### í ½í³ Manual Grading Required (90/150 points)" >> $GITHUB_STEP_SUMMARY
+          echo "### Manual Grading Required (90/150 points)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Your instructor will evaluate:" >> $GITHUB_STEP_SUMMARY
           echo "- **Code Quality & Style (30 pts)**: Naming, organization, comments, memory safety" >> $GITHUB_STEP_SUMMARY
@@ -62,7 +62,7 @@ jobs:
           echo "- **Documentation (20 pts)**: AI usage logs, README updates, inline documentation" >> $GITHUB_STEP_SUMMARY
           echo "- **GitHub Workflow (15 pts)**: Commit quality, repository organization" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### í ¼í¾“ Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
           echo "1. **Review test results** above to see which functions need work" >> $GITHUB_STEP_SUMMARY
           echo "2. **Complete your implementations** for any failing tests" >> $GITHUB_STEP_SUMMARY
           echo "3. **Document AI usage** in ai_docs/AI_USAGE_LOG.md" >> $GITHUB_STEP_SUMMARY
