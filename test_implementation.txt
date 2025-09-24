@@ -1,0 +1,1 @@
+# Test implementation of 100-point system
