@@ -1,54 +1,44 @@
 {
   "tests": [
     {
-      "name": "Task 1: Pointer Operations (15 pts)",
+      "name": "Task 1: Pointer Operations (25 pts)",
       "setup": "mkdir -p bin",
       "run": "./tests/test_pointers.sh",
       "input": "",
       "output": "POINTER_TESTS_PASSED",
       "comparison": "included",
       "timeout": 10,
-      "points": 15
+      "points": 25
     },
     {
-      "name": "Task 2: Structure Implementation (15 pts)",
+      "name": "Task 2: Structure Implementation (25 pts)",
       "setup": "mkdir -p bin",
       "run": "./tests/test_structures.sh",
       "input": "",
       "output": "STRUCTURE_TESTS_PASSED",
       "comparison": "included",
       "timeout": 10,
-      "points": 15
+      "points": 25
     },
     {
-      "name": "Task 3: Bit Manipulation (15 pts)",
+      "name": "Task 3: Bit Manipulation (25 pts)",
       "setup": "mkdir -p bin",
       "run": "./tests/test_bit_operations.sh",
       "input": "",
       "output": "BIT_TESTS_PASSED",
       "comparison": "included",
       "timeout": 10,
-      "points": 15
+      "points": 25
     },
     {
-      "name": "Task 4: Array Handling (10 pts)",
+      "name": "Task 4: Array Handling (25 pts)",
       "setup": "mkdir -p bin",
       "run": "./tests/test_multi_chip.sh",
       "input": "",
       "output": "MULTI_CHIP_TESTS_PASSED",
       "comparison": "included",
       "timeout": 10,
-      "points": 10
-    },
-    {
-      "name": "Task 5: AI Integration (5 pts)",
-      "setup": "",
-      "run": "./tests/test_ai_documentation.sh",
-      "input": "",
-      "output": "AI_DOCS_FOUND",
-      "comparison": "included",
-      "timeout": 5,
-      "points": 5
+      "points": 25
     }
   ]
 }

@@ -11,10 +11,10 @@ By the end of Day 3, you will:
 6. **Build comprehensive chip validation systems** integrating all concepts
 
 ###  Assignment Overview
-**Theme:** Chip State Monitoring with AI Integration
-**Focus:** Pointers, arrays, structures, bit manipulation, AI tools
+**Theme:** Chip State Monitoring System
+**Focus:** Pointers, arrays, structures, bit manipulation
 **Time Allocation:** 3.5 hours in-class + 2 hours homework
-**Total Points:** 150 points
+**Total Points:** 100 points
 
 ###  Project Structure
 ```
@@ -23,17 +23,12 @@ day3-memory-structures-ai/
 │   ├── chip_monitor.c          # Task 1 & 2: Pointer fundamentals and ChipState
 │   ├── bit_operations.c        # Task 3: Bit manipulation operations
 │   ├── multi_chip_test.c       # Task 4: Array of chips testing
-│   ├── ai_enhanced_validation.c # Task 5: AI-assisted development
 │   ├── memory_safety.c         # Homework: Advanced pointer techniques
 │   └── performance_optimizer.c  # Homework: Memory optimization
 ├── include/
 │   ├── chip_state.h            # ChipState structure definitions
 │   ├── bit_macros.h            # Bit manipulation macros
 │   └── memory_utils.h          # Memory safety utilities
-├── ai_docs/
-│   ├── AI_USAGE_LOG.md         # Required: Document all AI interactions
-│   ├── ai_guidelines.md        # Responsible AI usage guide
-│   └── ai_evaluation_template.md # Critical evaluation framework
 ├── tests/
 │   └── memory_tests.c          # Automated testing framework
 └── docs/
@@ -141,30 +136,6 @@ for (int i = 0; i < MAX_CHIPS; i++) {
 }
 ```
 
-### Task 5: AI-Assisted Development Session (45 minutes)
-**Objective:** Use AI tools responsibly for code enhancement with critical evaluation
-
-**What you'll implement:**
-- AI-enhanced validation algorithms
-- Code optimization suggestions from AI
-- Critical evaluation of AI-generated code
-- Documentation of AI interactions
-
-**Files to work on:**
-- `src/ai_enhanced_validation.c`
-- `ai_docs/AI_USAGE_LOG.md`
-
-**AI Tools to explore:**
-- GitHub Copilot (if available)
-- ChatGPT for code review
-- AI-powered debugging assistance
-- Code completion and suggestion tools
-
-**Required documentation:**
-- Log all AI interactions in AI_USAGE_LOG.md
-- Critically evaluate each AI suggestion
-- Document what you accepted/rejected and why
-- Reflect on AI tool effectiveness
 
 ##  Homework Extensions (2 hours)
 
@@ -230,38 +201,17 @@ make debug
 3. Create your AI_USAGE_LOG.md from the template
 4. Begin documenting all AI interactions
 
-##  Assessment Criteria (150 points total)
+## Assessment Criteria (100 points total)
 
-### Code Functionality (60 points)
-- **Pointer Operations (15 pts):** Correct use of & and * operators
-- **Structure Implementation (15 pts):** Proper ChipState design and usage
-- **Bit Manipulation (15 pts):** Correct macro implementation and usage
-- **Array Handling (10 pts):** Multi-chip array management
-- **AI Integration (5 pts):** Successful AI tool usage
+### Automated Testing (100 points)
+- **Task 1: Pointer Operations (25 pts)** - Correct use of & and * operators, memory addressing
+- **Task 2: Structure Implementation (25 pts)** - Proper ChipState design and usage
+- **Task 3: Bit Manipulation (25 pts)** - Correct macro implementation and bit operations
+- **Task 4: Array Handling (25 pts)** - Multi-chip array management and operations
 
-### Code Quality & Style (30 points)
-- **Memory Safety (10 pts):** Null checks, bounds checking
-- **Code Organization (8 pts):** Modular design, clear structure
-- **Naming Conventions (7 pts):** Meaningful variable and function names
-- **Comments (5 pts):** Clear, helpful documentation
-
-### Technical Implementation (25 points)
-- **Pointer Usage (5 pts):** Advanced pointer techniques
-- **Structure Design (5 pts):** Efficient, logical structure layout
-- **Bit Operations (5 pts):** Optimized bit manipulation
-- **Memory Management (5 pts):** Safe memory practices
-- **Performance (5 pts):** Efficient algorithms and data access
-
-### Documentation (20 points)
-- **AI Usage Documentation (8 pts):** Complete AI_USAGE_LOG.md
-- **Code Comments (6 pts):** Inline documentation quality
-- **README Updates (3 pts):** Implementation notes and usage
-- **Technical Documentation (3 pts):** Clear explanations
-
-### GitHub Workflow (15 points)
-- **Commit Quality (8 pts):** Frequent, descriptive commits
-- **Repository Organization (4 pts):** Clean, professional structure
-- **Collaboration (3 pts):** Proper branching and PR practices
+All grading is automated and deterministic. Each task is worth 25 points and follows a pass/fail model:
+- **PASS (25 points)**: All test cases pass, functionality works correctly
+- **FAIL (0 points)**: One or more test cases fail, implementation incomplete
 
 ##  AI Integration Guidelines
 
